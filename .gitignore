@@ -106,3 +106,4 @@ gradlew.bat
 projectFilesBackup/
 settings.gradle
 /.gradle/
+!/.gradle/
