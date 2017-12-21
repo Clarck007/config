@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    //配置keystore签名
+//    signingConfigs {
+    //正式签名文件配置
+//        release {
+//            storeFile file("xxxxxxxxStore")
+//            storePassword "xxxxxxxx"
+//            keyAlias "timehut team"
+//            keyPassword "xxxxxxxx"
+//        }
+//    }
+    buildTypes {
+        //调式模式时
+        debug {
+            //启用代码混淆
+            minifyEnabled false
+            //混淆规则配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //引用调试的签名文件
+            signingConfig signingConfigs.debug
+        }
+        //运行模式时
+        release {
+            //启用代码混淆
+            minifyEnabled true
+            //是否优化zip
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //引用发布的签名文件
+//            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+//    compile 'com.android.support:appcompat-v7:25.3.1' 24
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["design"]
+    testCompile 'junit:junit:4.12'
+}
